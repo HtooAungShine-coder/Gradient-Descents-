@@ -1,0 +1,50 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+#generate Data
+x = np.array([400, 450, 500, 550, 600, 650, 700, 750, 800, 850])
+y = np.array([200, 220, 250, 270, 300, 320, 350, 370, 400, 420])
+
+def gradient_descent(x, y, learning_rate=0.000001, iterations = 10):
+    m, b = 0,0
+    n = len(y)
+    mse_history = []
+    m_history = []
+    b_history =[]
+
+    fig, ax = plt.subplots(1 ,2 , figsize= (12 , 5))
+
+    for i in range(iterations): 
+        y_p = m * x + b 
+        mse = (1/2) * np.sum((y - y_p)**2)
+        dm = (-2/n) * np.sum(x * (y - y_p))
+        db = (-2/n) * np.sum(y - y_p)
+
+        #update parameters
+        m -= learning_rate * dm
+        b -= learning_rate * db
+        mse_history.append(mse)
+        m_history.append(m)
+        b_history.append(b)
+
+        print(f'Epoch { i + 1 } | y = {m:.3f}x + {b:.3f} | error: {mse:.4f}')
+    
+            #Plotting results
+        ax[0].scatter(x, y, color='blue')
+        ax[0].plot(x, y_p, label=f'iterations {i+1}') 
+        ax[0].set_xlabel('X')
+        ax[0].set_ylabel('Y')
+        ax[0].set_title('Gradient Descent Regression')
+        ax[0].legend()
+
+    ax[1].plot(range(len(mse_history)), mse_history, color= 'red')
+    ax[1].set_xticks(range(len(mse_history)))
+    ax[1].set_xlabel("Iterations")
+    ax[1].set_ylabel("Mean Squared Error")
+    ax[1].set_title("MSE vs Iterations")
+    
+    plt.tight_layout()
+    plt.show()
+
+gradient_descent(x,y, iterations=10)
+

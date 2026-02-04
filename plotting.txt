@@ -1,0 +1,19 @@
+fig, ax = plt.subplots(1, 2, figsize=(12, 5))
+
+
+# Final plots
+        ax[0].scatter(x, y, color='blue')
+        ax[0].plot(x,y_pred, label=f'Iteration {i+1}')
+        ax[0].set_xlabel('size')
+        ax[0].set_ylabel('price')
+        ax[0].set_title('Gradient Descent Regression')
+        ax[0].legend()
+ 
+    ax[1].plot(range(len(mse_history)), mse_history, color='green')
+    ax[1].set_xticks(range(len(mse_history)))
+    ax[1].set_xlabel('Iterations')
+    ax[1].set_ylabel('Mean Squared Error')
+    ax[1].set_title('MSE vs Iterations')
+
+    plt.tight_layout()
+    plt.show()
